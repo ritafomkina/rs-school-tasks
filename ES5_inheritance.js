@@ -2,8 +2,8 @@
 
 // ES5 syntax
 
-function BaseInESFive(str = "") {
-  this.str = str;
+function BaseInESFive() {
+  this.str = str || '';
 }
 
 BaseInESFive.prototype = {
@@ -32,9 +32,9 @@ BaseInESFive.prototype = {
   },
 };
 
-function StringBuilder(str = "") {
+function StringBuilder() {
   BaseInESFive.call(this, str);
-  this.str = str;
+  this.str = str || '';
 }
 
 StringBuilder.prototype = Object.create(BaseInESFive.prototype, {
@@ -48,9 +48,9 @@ StringBuilder.prototype = Object.create(BaseInESFive.prototype, {
   remove: {
     value: function (value) {
       this.str = this.str
-        .split("")
+        .split('')
         .filter((char) => char != value)
-        .join("");
+        .join('');
       return this;
     },
     enumerable: false,
@@ -59,7 +59,7 @@ StringBuilder.prototype = Object.create(BaseInESFive.prototype, {
 
   sub: {
     value: function (from, n) {
-      this.str = this.str.split("").splice(from, n).join("");
+      this.str = this.str.split('').splice(from, n).join('');
       return this;
     },
     enumerable: false,
