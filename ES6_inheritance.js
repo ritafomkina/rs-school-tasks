@@ -51,3 +51,14 @@ class IntBuilder extends BaseInESSix {
     return this;
   }
 }
+
+IntBuilder.random(10, 100);          // 42;
+
+let intBuilder = new IntBuilder(10); // 10;
+console.log(intBuilder
+  .plus(2, 3, 2)                     // 17;
+  .minus(1, 2)                       // 14;
+  .multiply(2)                       // 28;
+  .divide(4)                         // 7;
+  .mod(3)                            // 1;
+  .get());

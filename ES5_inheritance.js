@@ -2,7 +2,7 @@
 
 // ES5 syntax
 
-function BaseInESFive() {
+function BaseInESFive(str) {
   this.str = str || '';
 }
 
@@ -32,7 +32,7 @@ BaseInESFive.prototype = {
   },
 };
 
-function StringBuilder() {
+function StringBuilder(str) {
   BaseInESFive.call(this, str);
   this.str = str || '';
 }
@@ -66,3 +66,13 @@ StringBuilder.prototype = Object.create(BaseInESFive.prototype, {
     writable: true,
   },
 });
+
+let strBuilder = new StringBuilder('Hello'); // 'Hello';
+console.log(strBuilder
+  .plus(' all', '!')                         // 'Hello all!'
+  .minus(4)                                  // 'Hello '
+  .multiply(3)                               // 'Hello Hello Hello '
+  .divide(4)                                 // 'Hell';
+  .remove('l')                               // 'He';
+  .sub(1,1)                                  // 'e';
+  .get());
