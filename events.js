@@ -1,44 +1,64 @@
-let screenText = '';
 const out = document.querySelector('.screen-text');
-out.textContent = screenText;
+out.innerHTML = '';
+const cpslck = false;
+const shiftL = false;
+const shiftR = false;
 
 function backspace(str) {
   return str.slice(0, str.length - 1);
 }
 
-function enter(str) {
+function enter(parent) {
   const br = document.createElement('br');
-  return (str + br);
+  parent.append(br);
+}
+
+function tab(str) {
+  return '	';
 }
 
 function printClick(event) {
   if (!event.target.classList.contains('key')) return;
-  const key = event.target.textContent;
-  screenText += key;
-  out.textContent = screenText;
+  let key = event.target.textContent;
+  let active = document.querySelector('.active');
+  if(active) {
+    active.classList.remove('active');
+  }
+  event.target.classList.add('active');
+  if(event.target.id === 'Backspace') {
+    out.innerHTML = backspace(out.innerHTML);
+  }
+  if(event.target.id === 'Enter') {
+   enter(out);
+  }
+  if(event.target.id === 'Tab') {
+    out.innerHTML += tab();
+  }
+  // screenText += key;
+  out.innerHTML += key;
+  // if (event.target.id('bckspc')))
 }
 
 function printKey(event) {
-  if (!event.target.classList.contains('key')) return;
-// console.log(event);
-  let { key } = event;
+  const key = event.key.toLowerCase();
   const { code } = event;
-  if (key === 'Enter') {
-    key = keysInfo.get(key).enValue;
-    screenText += key;
+  let active = document.querySelector('.active');
+  if(active) {
+    active.classList.remove('active');
+  }
+  active = document.getElementById(code);
+  active.classList.add('active');
+  if (key === 'enter') {
+    enter(out);
   }
   if (code.includes('Digit') || code.includes('Key') || code.includes('Space')) {
-    screenText += key;
+    out.innerHTML += key;
   }
   if (event.code === 'Backspace') {
-    screenText = backspace(screenText);
+    out.innerHTML = backspace(out.innerHTML);
   }
-  console.log(key);
-  out.textContent = screenText;
-  console.log(screenText);
-//   console.log(event.key);
 }
 
 const keyArea = document.querySelector('.keys-area');
-// keyArea.addEventListener('click', print);
-keyArea.addEventListener('keydown', printKey);
+keyArea.addEventListener('click', printClick);
+document.addEventListener('keydown', printKey);
