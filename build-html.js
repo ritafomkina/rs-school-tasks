@@ -302,26 +302,6 @@ class HTMLBuilder {
   //   });
   // }
 
-  addIdenticalChilds(
-    elsInfo,
-    propName,
-    childTagName,
-    childNum = 1,
-  ) {
-    let count = childNum;
-    this.container.forEach((el) => {
-      const elInObj = elsInfo.get(el.id);
-      if (elInObj[propName]) {
-        do {
-          const child = document.createElement(childTagName);
-          child.innerHTML = elInObj[propName];
-          el.appendChild(child);
-          count -= 1;
-        } while (count > 0);
-      }
-    });
-  }
-
   fillWithContent(className, elsInfo, propName) {
     // получаем массив необходимых нам элементов иэ контейнера по их классу:
     const els = this.container.filter((el) => el.classList.contains(className));
@@ -331,13 +311,6 @@ class HTMLBuilder {
   }
 }
 
-function loadScript(src) {
-  return new Promise (() => {
-    const script = document.createElement('script');
-    script.src = src;
-    document.body.appendChild(script);
-  });
-}
 // создаем обертку
 const keyboard = new HTMLBuilder('div', 'keyboard');
 
