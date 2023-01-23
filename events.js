@@ -1,5 +1,8 @@
 const out = document.querySelector('.screen-text');
+const keys = Array.from(document.querySelectorAll('.key'));
+
 out.innerHTML = '';
+
 const cpslck = false;
 const shiftL = false;
 const shiftR = false;
@@ -18,13 +21,11 @@ function tab(str) {
 }
 
 function printClick(event) {
-  if (!event.target.classList.contains('key')) return;
-  let key = event.target.textContent;
-  let active = document.querySelector('.active');
-  if(active) {
-    active.classList.remove('active');
-  }
-  event.target.classList.add('active');
+  let key = event.currentTarget.textContent[0].toLowerCase();
+
+
+
+
   if(event.target.id === 'Backspace') {
     out.innerHTML = backspace(out.innerHTML);
   }
@@ -37,6 +38,11 @@ function printClick(event) {
   // screenText += key;
   out.innerHTML += key;
   // if (event.target.id('bckspc')))
+}
+
+function makeActive(event) {
+  // console.log(event);
+  event.target.classList.toggle('active');
 }
 
 function printKey(event) {
@@ -60,5 +66,13 @@ function printKey(event) {
 }
 
 const keyArea = document.querySelector('.keys-area');
-keyArea.addEventListener('click', printClick);
+
+// keyArea.addEventListener('click', printClick);
+keys.forEach((key) => {
+  key.addEventListener('click', printClick);
+  key.addEventListener('mousedown', makeActive);
+  key.addEventListener('mouseup', makeActive);
+
+
+});
 document.addEventListener('keydown', printKey);
