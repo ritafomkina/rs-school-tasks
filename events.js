@@ -1,6 +1,8 @@
 const out = document.querySelector('.screen-text');
 const keys = Array.from(document.querySelectorAll('.key'));
 
+let ENlang = true;
+
 out.innerHTML = '';
 
 const cpslck = false;
@@ -40,24 +42,23 @@ function printClick(event) {
   // if (event.target.id('bckspc')))
 }
 
+const pressedKeys = {};
+
 function makeActive(event) {
-  // console.log(event);
   event.target.classList.toggle('active');
 }
 
 function printKey(event) {
-  const key = event.key.toLowerCase();
+  // console.log(event.code)
+  const { key } = event;
   const { code } = event;
-  let active = document.querySelector('.active');
-  if(active) {
-    active.classList.remove('active');
-  }
-  active = document.getElementById(code);
-  active.classList.add('active');
-  if (key === 'enter') {
+  const pressedEl = document.getElementById(code);
+  pressedEl.classList.add('active');
+  pressedKeys[code] = true;
+  if (key === 'Enter') {
     enter(out);
   }
-  if (code.includes('Digit') || code.includes('Key') || code.includes('Space')) {
+  if (pressedEl.classList.contains('char')) {
     out.innerHTML += key;
   }
   if (event.code === 'Backspace') {
@@ -65,14 +66,27 @@ function printKey(event) {
   }
 }
 
-const keyArea = document.querySelector('.keys-area');
+function hotKeys(event) {
+  // console.log(pressedKeys);
+  const pressedEl = document.getElementById(event.code);
+  pressedEl.classList.remove('active');
+  if (['ControlLeft'] in pressedKeys && ['Space'] in pressedKeys) {
+    if (ENlang) {
+      switchTo('RU', keysInfo);
+      ENlang = false;
+    } else {
+      switchTo('EN', keysInfo);
+      ENlang = true;
+    }
+  }
+  delete pressedKeys[event.code];
+}
 
-// keyArea.addEventListener('click', printClick);
 keys.forEach((key) => {
-  key.addEventListener('click', printClick);
   key.addEventListener('mousedown', makeActive);
   key.addEventListener('mouseup', makeActive);
-
-
+  key.addEventListener('click', printClick);
 });
+
 document.addEventListener('keydown', printKey);
+document.addEventListener('keyup', hotKeys);
