@@ -41,10 +41,10 @@ const keysInfo = new Map([
     ENValue: '=', RUValue: '=', addENValue: '+', addRUValue: '+', classNames: ['key', 'char', 'num'],
   }],
   ['Backspace', {
-    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
+    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', eventHandler: Backspace, classNames: ['key', 'mod'],
   }],
   ['Tab', {
-    ENValue: '  ', RUValue: '  ', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
+    ENValue: '  ', RUValue: '  ', addENValue: '', addRUValue: '', eventHandler: Tab, classNames: ['key', 'mod'],
   }],
   ['KeyQ', {
     ENValue: 'Q', RUValue: 'Й', addENValue: '', addRUValue: '', classNames: ['key', 'char', 'EN-lttr', 'RU-lttr'],
@@ -86,7 +86,7 @@ const keysInfo = new Map([
     ENValue: '\u002F', RUValue: 'Ё', addENValue: '|', addRUValue: '', classNames: ['key', 'char', 'RU-lttr'],
   }],
   ['CapsLock', {
-    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
+    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', eventHandler: CapsLock, classNames: ['key', 'mod'],
   }],
   ['KeyA', {
     ENValue: 'A', RUValue: 'Ф', addENValue: '', addRUValue: '', classNames: ['key', 'char', 'EN-lttr', 'RU-lttr'],
@@ -122,10 +122,10 @@ const keysInfo = new Map([
     ENValue: '\'', RUValue: 'Э', addENValue: '"', addRUValue: '', classNames: ['key', 'char', 'RU-lttr'],
   }],
   ['Enter', {
-    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
+    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', eventHandler: Enter, classNames: ['key', 'mod'],
   }],
   ['ShiftLeft', {
-    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
+    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', eventHandler: ShiftLeft, classNames: ['key', 'mod'],
   }],
   ['IntlBackslash', {
     ENValue: '`', RUValue: ']', addENValue: '~', addRUValue: '[', classNames: ['key', 'char'],
@@ -161,13 +161,13 @@ const keysInfo = new Map([
     ENValue: '/', RUValue: '/', addENValue: '?', addRUValue: '?', classNames: ['key', 'char'],
   }],
   ['ShiftRight', {
-    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
+    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', eventHandler: ShiftRight, classNames: ['key', 'mod'],
   }],
   ['Fn', {
     ENValue: '', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
   }],
   ['ControlLeft', {
-    ENValue: 'control', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
+    ENValue: 'control', RUValue: '', addENValue: '', addRUValue: '', eventHandler: ControlLeft, classNames: ['key', 'mod'],
   }],
   ['AltLeft', {
     ENValue: 'option', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
@@ -176,7 +176,7 @@ const keysInfo = new Map([
     ENValue: 'command', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],
   }],
   ['Space', {
-    ENValue: ' ', RUValue: ' ', addENValue: '', addRUValue: '', classNames: ['key', 'char', 'mod'],
+    ENValue: '', RUValue: '', addENValue: '', addRUValue: '', eventHandler: Space, classNames: ['key', 'mod'],
   }],
   ['MetaRight', {
     ENValue: 'command', RUValue: '', addENValue: '', addRUValue: '', classNames: ['key', 'mod'],

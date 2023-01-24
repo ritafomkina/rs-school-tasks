@@ -1,45 +1,69 @@
 const out = document.querySelector('.screen-text');
 const keys = Array.from(document.querySelectorAll('.key'));
+const chars = Array.from(document.querySelectorAll('.char'));
 
 let ENlang = true;
 
 out.innerHTML = '';
 
-const cpslck = false;
-const shiftL = false;
-const shiftR = false;
+let cpslck = false;
+let shiftL = false;
+let shiftR = false;
+let ctrl = false;
 
-function backspace(str) {
-  return str.slice(0, str.length - 1);
+function CapsLock(event) {
+  cpslck = !cpslck;
+  makeActive(event);
 }
 
-function enter(parent) {
+function ShiftLeft(event) {
+  shiftL = !shiftL;
+  makeActive(event);
+}
+
+function ShiftRight(event) {
+  shiftR = !shiftR;
+  makeActive(event);
+}
+
+function Backspace(event) {
+  const str = out.innerHTML;
+  str.slice(0, str.length - 1);
+}
+
+function Enter(event) {
   const br = document.createElement('br');
-  parent.append(br);
+  out.append(br);
 }
 
-function tab(str) {
-  return '	';
+function Tab(event) {
+  out.innerHTML += '    ';
+}
+
+function ControlLeft(event) {
+  ctrl = !ctrl;
+  makeActive(event);
+}
+
+function Space(event) {
+  if (ctrl) {
+    if (ENlang) {
+      switchTo('RU');
+      ENlang = false;
+    } else {
+      switchTo('RU');
+      ENlang = true;
+    }
+  } else {
+    out.innerHTML += ' ';
+  }
 }
 
 function printClick(event) {
-  let key = event.currentTarget.textContent[0].toLowerCase();
-
-
-
-
-  if(event.target.id === 'Backspace') {
-    out.innerHTML = backspace(out.innerHTML);
-  }
-  if(event.target.id === 'Enter') {
-   enter(out);
-  }
-  if(event.target.id === 'Tab') {
-    out.innerHTML += tab();
-  }
-  // screenText += key;
+  let key = event.currentTarget.textContent;
+  key = cpslck ? key.toUpperCase() : key.toLowerCase();
   out.innerHTML += key;
-  // if (event.target.id('bckspc')))
+  ctrl = false;
 }
 
 const pressedKeys = {};
@@ -47,9 +71,7 @@ const pressedKeys = {};
 function makeActive(event) {
   event.target.classList.toggle('active');
 }
-
 function printKey(event) {
-  // console.log(event.code)
   const { key } = event;
   const { code } = event;
   const pressedEl = document.getElementById(code);
@@ -82,11 +104,20 @@ function hotKeys(event) {
   delete pressedKeys[event.code];
 }
 
+const addChars = Array.from(document.querySelectorAll('.char:has(> span)')).map((el) => el.firstElementChild);
+
 keys.forEach((key) => {
   key.addEventListener('mousedown', makeActive);
   key.addEventListener('mouseup', makeActive);
-  key.addEventListener('click', printClick);
 });
 
 document.addEventListener('keydown', printKey);
 document.addEventListener('keyup', hotKeys);
+
+if (shiftL || shiftR) {
+  addChars.forEach((el) => el.addEventListener('click', printClick));
+} else {
+  chars.forEach((char) => {
+    char.addEventListener('click', printClick);
+  });
+}

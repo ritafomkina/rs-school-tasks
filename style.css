@@ -83,8 +83,13 @@ html {
 } */
 .key span {
     position: absolute;
-    top: 5px;
-    left: 10px;
+    display: flex;
+    align-items: flex-start;
+    padding: 8px;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 80%;
 }
 .mod {
     justify-content: end;
