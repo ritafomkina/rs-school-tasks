@@ -1,6 +1,5 @@
 const out = document.querySelector('.screen-text');
-const keys = Array.from(document.querySelectorAll('.key'));
-const chars = Array.from(document.querySelectorAll('.char'));
+
 
 let ENlang = true;
 
@@ -104,15 +103,18 @@ function hotKeys(event) {
   delete pressedKeys[event.code];
 }
 
+document.addEventListener('keydown', printKey);
+document.addEventListener('keyup', hotKeys);
+
+const keys = Array.from(document.querySelectorAll('.key'));
+const chars = Array.from(document.querySelectorAll('.char'));
 const addChars = Array.from(document.querySelectorAll('.char:has(> span)')).map((el) => el.firstElementChild);
+const mods = Array.from(document.querySelectorAll('.mod'));
 
 keys.forEach((key) => {
   key.addEventListener('mousedown', makeActive);
   key.addEventListener('mouseup', makeActive);
 });
-
-document.addEventListener('keydown', printKey);
-document.addEventListener('keyup', hotKeys);
 
 if (shiftL || shiftR) {
   addChars.forEach((el) => el.addEventListener('click', printClick));
@@ -120,4 +122,20 @@ if (shiftL || shiftR) {
   chars.forEach((char) => {
     char.addEventListener('click', printClick);
   });
+}
+
+mods.forEach((mod) => {
+  const eventHandlerSource = keysInfo.get(mod.id).eventHandler;
+  mod.addEventListener('click', eventHandlerSource);
+});
+// каретка слушать пробел перезагрузка inner
+
+
+const loadData = () => {
+  return new Promise((resolve, reject) => {
+    resolve();
+  })
+}
+const getData() {
+
 }
