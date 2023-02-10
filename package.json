@@ -1,0 +1,25 @@
+{
+  "name": "custom-lodash",
+  "version": "1.0.0",
+  "description": "rss task",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritafomkina/rs-school-tasks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ritafomkina/rs-school-tasks/issues"
+  },
+  "homepage": "https://github.com/ritafomkina/rs-school-tasks#readme",
+  "devDependencies": {
+    "jest": "^29.4.2"
+  }
+}
