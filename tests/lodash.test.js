@@ -329,8 +329,31 @@ describe('Filter', () => {
     expect(_.filter([], (o) => o === 1 )).toStrictEqual([]);
   });
 
-  test('Should return an empty array if predicat is undefined', () => {
-    expect(_.filter(users)).toStrictEqual([]);
+  test('Should throw an error if first argument is`nt array', () => {
+    expect(() => {
+      _.filter('abcdefg', 2);
+    }).toThrow(TypeError);
+  });
+
+  test('Should throw an error if second argument is NaN', () => {
+    expect(() => {
+      _.filter(users, NaN);
+    }).toThrow(TypeError);
+  });
+
+  test('Should throw an error if second argument is a number', () => {
+    expect(() => {
+      _.filter(users, 2);
+    }).toThrow(TypeError);
+  });
+
+  test('Should return a copy of initial arraycalled without second argument', () => {
+    expect(
+      _.filter(users)
+    ).toStrictEqual([
+      { user: 'barney', age: 36, active: true },
+      { user: 'fred', age: 40, active: false },
+    ]);
   });
 
   test('Should return an array with items callback on that return true', () => {
@@ -382,11 +405,7 @@ describe('Filter', () => {
     ]);
   });
 
-  test('Should throw an error if first argument is`nt array', () => {
-    expect(() => {
-      _.filter('abcdefg', 2);
-    }).toThrow(TypeError);
-  });
+
 });
 
 describe('Find', () => {

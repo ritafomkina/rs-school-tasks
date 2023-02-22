@@ -123,11 +123,17 @@ class Lodash {
 
   filter(arr, predicate) {
     if (arguments.length === 0 ||
-      arr.length === 0 || !predicate) {
+      arr.length === 0) {
       return [];
     }
     if (!Array.isArray(arr)) {
       throw new TypeError('First argument should be an array');
+    }
+    if(typeof predicate === 'number') {
+      throw new TypeError('Second argument should be a function or an object or an array or a string');
+    }
+    if(!predicate) {
+      return sSlice(arr);
     }
     let result;
     let callback;
