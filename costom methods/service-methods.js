@@ -1,6 +1,7 @@
 function sPush (arr, element) {
     const lastInd = arr.length;
     arr[lastInd] = element;
+    //modified a little:
     return arr;
 }
 

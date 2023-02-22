@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/ritafomkina/rs-school-tasks#readme",
   "devDependencies": {
+    "coverage": "^0.4.1",
     "jest": "^29.4.2"
   }
 }

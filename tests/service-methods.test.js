@@ -88,7 +88,7 @@ test(
 test(
     'Checking find with all arguments',
     () => {
-        expect(sFind(initArr, item => item.length < 4)).toStrictEqual('ant');
+        expect(sFind(initArr, item => item.length < 4)).toEqual('ant');
     }
 );
 
