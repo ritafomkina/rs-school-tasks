@@ -2,88 +2,90 @@ const { sPush, sSlice, sFind, sFilter, sForEach} = require('../costom methods/se
 
 const initArr = ['ant', 'bison', 'camel', 'duck', 'elephant'];
 
-// slice
-
 test(
-    'Checking with two positions',
+    'Checkin slice with two positions',
     () => {
         expect(sSlice(initArr, 2, 4)).toStrictEqual(['camel', 'duck']);
     }
 );
 
 test(
-    'Checking without end position',
+    'Checking slice without end position',
     () => {
         expect(sSlice(initArr, 2)).toStrictEqual(['camel', 'duck', 'elephant']);
     }
 );
 
 test(
-    'Checking with negative start position',
+    'Checking slice with negative start position',
     () => {
         expect(sSlice(initArr, -2)).toStrictEqual(['duck', 'elephant']);
     }
 );
 
 test(
-    'Checking with negative end position',
+    'Checking slice with negative end position',
     () => {
         expect(sSlice(initArr, 2, -1)).toStrictEqual(['camel', 'duck']);
     }
 );
 
 test(
-    'Checking without positions',
+    'Checking slice without positions',
     () => {
         expect(sSlice(initArr)).toStrictEqual(initArr);
     }
 );
 
 test(
-    'Checking with start position bigger than array length',
+    'Checking slice without end position === 0',
+    () => {
+        expect(sSlice(initArr, 0, 0)).toStrictEqual([]);
+    }
+);
+
+test(
+    'Checking slice with start position bigger than array length',
     () => {
         expect(sSlice(initArr, 10)).toStrictEqual([]);
     }
 );
 
 test(
-    'Checking with end position bigger than array length',
+    'Checking slice with end position bigger than array length',
     () => {
         expect(sSlice(initArr, 2, 15)).toStrictEqual(['camel', 'duck', 'elephant']);
     }
 );
 
 test(
-    'Checking with start position less than array length',
+    'Checking slice with start position less than array length',
     () => {
         expect(sSlice(initArr, -15, 2)).toStrictEqual(['ant', 'bison']);
     }
 );
 
 test(
-    'Checking with end position less than array length',
+    'Checking slice with end position less than array length',
     () => {
         expect(sSlice(initArr, 2, -15)).toStrictEqual([]);
     }
 );
 
 test(
-    'Checking with same start and end position',
+    'Checking slice  with same start and end position',
     () => {
         expect(sSlice(initArr, 2, 2)).toStrictEqual([]);
     }
 );
 
-// push
 
 test(
-    'Checking Push with all arguments',
+    'Checking push with all arguments',
     () => {
         expect(sPush(initArr, 'cat')).toStrictEqual(['ant', 'bison', 'camel', 'duck', 'elephant', 'cat']);
     }
 );
-
-// find
 
 test(
     'Checking find with all arguments',
@@ -92,8 +94,6 @@ test(
     }
 );
 
-// filter
-
 test(
     'Checking filter with all arguments',
     () => {
@@ -101,10 +101,8 @@ test(
     }
 );
 
-// forEach
-
 test(
-    'Checking forEach',
+    'Checking forEach with all arguments',
     () => {
         expect(sForEach(initArr, item => item + '?')).toStrictEqual(undefined);
     }

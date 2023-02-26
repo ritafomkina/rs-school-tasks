@@ -20,7 +20,9 @@ class Lodash {
       isNaN(length) ||
       (length < 0) | (Math.floor(length) !== length)
     ) {
-      throw new TypeError('Second argument should be an positive integer or zero');
+      throw new TypeError(
+        'Second argument should be an positive integer or zero'
+      );
     }
     for (let i = 0; i < arr.length; i += length) {
       sPush(result, sSlice(arr, i, i + length));
@@ -49,17 +51,18 @@ class Lodash {
     if (
       typeof num !== 'number' ||
       isNaN(num) ||
-      (num < 0) || (Math.floor(num) !== num)
+      num < 0 ||
+      Math.floor(num) !== num
     ) {
-      throw new TypeError('Second argument should be an positive integer or zero');
+      throw new TypeError(
+        'Second argument should be an positive integer or zero'
+      );
     }
     return sSlice(arr, num, arr.length);
   }
 
   dropWhile(arr, predicate) {
-    if (arguments.length === 0
-      || arr.length === 0
-      || !predicate) {
+    if (arguments.length === 0 || arr.length === 0 || !predicate) {
       return [];
     }
     if (!Array.isArray(arr)) {
@@ -102,8 +105,7 @@ class Lodash {
   }
 
   take(arr, num = 1) {
-    if (arguments.length === 0
-      || arr.length === 0) {
+    if (arguments.length === 0 || arr.length === 0) {
       return [];
     }
     if (!Array.isArray(arr)) {
@@ -112,9 +114,12 @@ class Lodash {
     if (
       typeof num !== 'number' ||
       isNaN(num) ||
-      (num <= 0) || (Math.floor(num) !== num)
+      num <= 0 ||
+      Math.floor(num) !== num
     ) {
-      throw new TypeError('Second argument should be an positive integer or zero');
+      throw new TypeError(
+        'Second argument should be an positive integer or zero'
+      );
     }
     let result;
     result = sSlice(arr, 0, num);
@@ -122,18 +127,16 @@ class Lodash {
   }
 
   filter(arr, predicate) {
-    if (arguments.length === 0 ||
-      arr.length === 0) {
+    if (arguments.length === 0 || arr.length === 0) {
       return [];
     }
     if (!Array.isArray(arr)) {
       throw new TypeError('First argument should be an array');
     }
-    if(typeof predicate === 'number') {
-      throw new TypeError('Second argument should be a function or an object or an array or a string');
-    }
-    if(!predicate) {
-      return sSlice(arr);
+    if (typeof predicate === 'number' || arguments.length === 1) {
+      throw new Error(
+        'Second argument should be a function or an object or an array or a string'
+      );
     }
     let result;
     let callback;
@@ -165,8 +168,8 @@ class Lodash {
     if (!Array.isArray(arr)) {
       throw new TypeError('First argument should be an array');
     }
-    if (!predicate) {
-      return [];
+    if (arguments.length === 1) {
+      throw new Error('Missing second argument');
     }
     let result;
     let callback;
@@ -202,10 +205,22 @@ class Lodash {
   }
 
   includes(arr, el, fromPos = 0) {
-    if (!Array.isArray(arr)) {
-      throw new TypeError('First argument should be an array');
+    if (!Array.isArray(arr) && typeof arr !== 'string') {
+      throw new TypeError('First argument should be an array or string');
+    }
+    if (arguments.length === 1) {
+      throw new Error('Missing second argument');
     }
     let result = false;
+    if (isNaN(el) && typeof el === 'number') {
+      for (let i = fromPos; i < arr.length; i += 1) {
+        if (isNaN(arr[i])) {
+          result = true;
+          break;
+        }
+      }
+      return result;
+    }
     for (let i = fromPos; i < arr.length; i += 1) {
       if (arr[i] === el) {
         result = true;
@@ -218,6 +233,17 @@ class Lodash {
   map(arr, iteratee) {
     if (!Array.isArray(arr)) {
       throw new TypeError('First argument should be an array');
+    }
+    if (arguments.length === 1) {
+      throw new Error('Missing second argument');
+    }
+    if (
+      typeof iteratee === 'number' ||
+      typeof iteratee === 'object' ||
+      Array.isArray(iteratee) ||
+      !iteratee
+    ) {
+      throw new TypeError('Second argument should be function or string');
     }
     const result = [];
     let callback;
@@ -239,6 +265,9 @@ class Lodash {
     if (!arr.length) {
       return [];
     }
+    if (arr.length === 1 && Array.isArray(arr[0])) {
+      return this.chunk(arr[0]);
+    }
     const result = [];
     const initLength = arr[0].length;
     sForEach(arr, (item) => {
@@ -246,7 +275,7 @@ class Lodash {
         throw new TypeError('All arguments should be arrays');
       }
       if (item.length !== initLength) {
-        throw new Error('Arrays should have the same length');
+        throw new Error('All arrays should have the same length');
       }
     });
     for (let i = 0; i < initLength; i += 1) {
@@ -260,7 +289,25 @@ class Lodash {
   }
 
   merge(object, ...sourceObjects) {
+    // throw error if argument is null, function, array:
+    if (
+      typeof object !== 'object' ||
+      object === null ||
+      Array.isArray(object)
+    ) {
+      throw new TypeError('First argument should be an object');
+    }
+    if (arguments.length === 1) {
+      return object;
+    }
     for (let i = 0; i < sourceObjects.length; i += 1) {
+      if (
+        typeof sourceObjects[i] !== 'object' ||
+        sourceObjects[i] === null ||
+        Array.isArray(sourceObjects[i])
+      ) {
+        throw new TypeError('All arguments should be objects');
+      }
       const currentSource = sourceObjects[i];
       for (let key in currentSource) {
         const currentSourceProp = currentSource[key];
@@ -281,7 +328,23 @@ class Lodash {
   }
 
   omit(object, arr) {
+    if (
+      typeof object !== 'object' ||
+      object === null ||
+      Array.isArray(object)
+    ) {
+      throw new TypeError('First argument should be an object');
+    }
+    if (arr && !Array.isArray(arr)) {
+      throw new TypeError('Second argument should be an array');
+    }
     const result = {};
+    if (arguments.length === 1) {
+      for (let key in object) {
+        result[key] = object[key];
+      }
+      return result;
+    }
     for (let key in object) {
       if (!this.includes(arr, key)) {
         result[key] = object[key];
@@ -290,11 +353,27 @@ class Lodash {
     return result;
   }
 
-  omitBy(object, predicat) {
+  omitBy(object, predicate) {
+    if (
+      typeof object !== 'object' ||
+      object === null ||
+      Array.isArray(object)
+    ) {
+      throw new TypeError('First argument should be an object');
+    }
     const result = {};
+    if (arguments.length === 1) {
+      for (let key in object) {
+        result[key] = object[key];
+      }
+      return result;
+    }
+    if (typeof predicate !== 'function') {
+      throw new TypeError('Second argument should be a function');
+    }
     for (let key in object) {
       const current = object[key];
-      if (!predicat(current)) {
+      if (!predicate(current)) {
         result[key] = current;
       }
     }
@@ -302,7 +381,23 @@ class Lodash {
   }
 
   pick(object, arr) {
+    if (
+      typeof object !== 'object' ||
+      object === null ||
+      Array.isArray(object)
+    ) {
+      throw new TypeError('First argument should be an object');
+    }
+    if (arr && !Array.isArray(arr)) {
+      throw new TypeError('Second argument should be an array');
+    }
     const result = {};
+    if (arguments.length === 1) {
+      for (let key in object) {
+        result[key] = object[key];
+      }
+      return result;
+    }
     for (let key in object) {
       if (this.includes(arr, key)) {
         result[key] = object[key];
@@ -311,11 +406,27 @@ class Lodash {
     return result;
   }
 
-  pickBy(object, predicat) {
+  pickBy(object, predicate) {
+    if (
+      typeof object !== 'object' ||
+      object === null ||
+      Array.isArray(object)
+    ) {
+      throw new TypeError('First argument should be an object');
+    }
+    if (predicate && typeof predicate !== 'function') {
+      throw new TypeError('Second argument should be a function');
+    }
     const result = {};
+    if (arguments.length === 1) {
+      for (let key in object) {
+        result[key] = object[key];
+      }
+      return result;
+    }
     for (let key in object) {
       const current = object[key];
-      if (predicat(current)) {
+      if (predicate(current)) {
         result[key] = current;
       }
     }
@@ -323,7 +434,32 @@ class Lodash {
   }
 
   toPairs(object) {
+    if (
+      typeof object !== 'object' ||
+      object === null ||
+      Array.isArray(object)
+    ) {
+      throw new TypeError('First argument should be an object');
+    }
     const result = [];
+    if (object instanceof Map) {
+      for (let key of object) {
+        const current = [];
+        sPush(current, key[0]);
+        sPush(current, key[1]);
+        sPush(result, current);
+      }
+      return result;
+    }
+    if (object instanceof Set) {
+      for (let key of object) {
+        const current = [];
+        sPush(current, key);
+        sPush(current, key);
+        sPush(result, current);
+      }
+      return result;
+    }
     for (let key in object) {
       const current = [];
       sPush(current, key);
