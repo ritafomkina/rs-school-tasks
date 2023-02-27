@@ -12,7 +12,7 @@ class Lodash {
     if (arguments.length === 0 || arr.length === 0 || length === 0) {
       return result;
     }
-    if (!Array.isArray(arr)) {
+    if (!(arr instanceof Array)) {
       throw new TypeError('First argument should be an array');
     }
     if (
@@ -34,7 +34,7 @@ class Lodash {
     if (arguments.length === 0 || arr.length === 0) {
       return [];
     }
-    if (!Array.isArray(arr)) {
+    if (!(arr instanceof Array)) {
       throw new TypeError('First argument should be an array');
     }
     return sFilter(arr, (item) => !!item === true);
@@ -45,7 +45,7 @@ class Lodash {
     if (arguments.length === 0 || arr.length === 0 || num > arr.length) {
       return result;
     }
-    if (!Array.isArray(arr)) {
+    if (!(arr instanceof Array)) {
       throw new TypeError('First argument should be an array');
     }
     if (
@@ -65,12 +65,12 @@ class Lodash {
     if (arguments.length === 0 || arr.length === 0 || !predicate) {
       return [];
     }
-    if (!Array.isArray(arr)) {
+    if (!(arr instanceof Array)) {
       throw new TypeError('First argument should be an array');
     }
     let result;
     let callback;
-    if (typeof predicate === 'object' && !Array.isArray(predicate)) {
+    if (typeof predicate === 'object' && !(predicate instanceof Array)) {
       const obj = predicate;
       for (let i = 0; i < arr.length; i += 1) {
         for (let key in obj) {
@@ -86,7 +86,7 @@ class Lodash {
     if (typeof predicate === 'function') {
       callback = predicate;
     }
-    if (Array.isArray(predicate)) {
+    if (predicate instanceof Array) {
       const key = predicate[0];
       const value = predicate[1];
       callback = (item) => item[key] === value;
@@ -108,7 +108,7 @@ class Lodash {
     if (arguments.length === 0 || arr.length === 0) {
       return [];
     }
-    if (!Array.isArray(arr)) {
+    if (!(arr instanceof Array)) {
       throw new TypeError('First argument should be an array');
     }
     if (
@@ -130,7 +130,7 @@ class Lodash {
     if (arguments.length === 0 || arr.length === 0) {
       return [];
     }
-    if (!Array.isArray(arr)) {
+    if (!(arr instanceof Array)) {
       throw new TypeError('First argument should be an array');
     }
     if (typeof predicate === 'number' || arguments.length === 1) {
@@ -140,7 +140,7 @@ class Lodash {
     }
     let result;
     let callback;
-    if (typeof predicate === 'object' && !Array.isArray(predicate)) {
+    if (typeof predicate === 'object' && !(predicate instanceof Array)) {
       const obj = predicate;
       for (let key in obj) {
         callback = (item) => obj[key] === item[key];
@@ -151,7 +151,7 @@ class Lodash {
     if (typeof predicate === 'function') {
       callback = predicate;
     }
-    if (Array.isArray(predicate)) {
+    if (predicate instanceof Array) {
       const key = predicate[0];
       const value = predicate[1];
       callback = (item) => item[key] === value;
@@ -165,7 +165,7 @@ class Lodash {
   }
 
   find(arr, predicate) {
-    if (!Array.isArray(arr)) {
+    if (!(arr instanceof Array)) {
       throw new TypeError('First argument should be an array');
     }
     if (arguments.length === 1) {
@@ -173,7 +173,7 @@ class Lodash {
     }
     let result;
     let callback;
-    if (typeof predicate === 'object' && !Array.isArray(predicate)) {
+    if (typeof predicate === 'object' && !(predicate instanceof Array)) {
       const obj = predicate;
       callback = (item) => {
         let result;
@@ -191,7 +191,7 @@ class Lodash {
     if (typeof predicate === 'function') {
       callback = predicate;
     }
-    if (Array.isArray(predicate)) {
+    if (predicate instanceof Array) {
       const key = predicate[0];
       const value = predicate[1];
       callback = (item) => item[key] === value;
@@ -205,7 +205,7 @@ class Lodash {
   }
 
   includes(arr, el, fromPos = 0) {
-    if (!Array.isArray(arr) && typeof arr !== 'string') {
+    if (!(arr instanceof Array) && typeof arr !== 'string') {
       throw new TypeError('First argument should be an array or string');
     }
     if (arguments.length === 1) {
@@ -231,7 +231,7 @@ class Lodash {
   }
 
   map(arr, iteratee) {
-    if (!Array.isArray(arr)) {
+    if (!(arr instanceof Array)) {
       throw new TypeError('First argument should be an array');
     }
     if (arguments.length === 1) {
@@ -240,7 +240,7 @@ class Lodash {
     if (
       typeof iteratee === 'number' ||
       typeof iteratee === 'object' ||
-      Array.isArray(iteratee) ||
+      iteratee instanceof Array ||
       !iteratee
     ) {
       throw new TypeError('Second argument should be function or string');
@@ -265,13 +265,13 @@ class Lodash {
     if (!arr.length) {
       return [];
     }
-    if (arr.length === 1 && Array.isArray(arr[0])) {
+    if (arr.length === 1 && arr[0] instanceof Array) {
       return this.chunk(arr[0]);
     }
     const result = [];
     const initLength = arr[0].length;
     sForEach(arr, (item) => {
-      if (!Array.isArray(item)) {
+      if (!(item instanceof Array)) {
         throw new TypeError('All arguments should be arrays');
       }
       if (item.length !== initLength) {
@@ -293,7 +293,7 @@ class Lodash {
     if (
       typeof object !== 'object' ||
       object === null ||
-      Array.isArray(object)
+      object instanceof Array
     ) {
       throw new TypeError('First argument should be an object');
     }
@@ -304,7 +304,7 @@ class Lodash {
       if (
         typeof sourceObjects[i] !== 'object' ||
         sourceObjects[i] === null ||
-        Array.isArray(sourceObjects[i])
+        sourceObjects[i] instanceof Array
       ) {
         throw new TypeError('All arguments should be objects');
       }
@@ -312,7 +312,7 @@ class Lodash {
       for (let key in currentSource) {
         const currentSourceProp = currentSource[key];
         if (object[key]) {
-          if (Array.isArray(currentSourceProp)) {
+          if (currentSourceProp instanceof Array) {
             for (let j = 0; j < currentSourceProp.length; j += 1) {
               for (let k in currentSourceProp[j]) {
                 object[key][j][k] = currentSourceProp[j][k];
@@ -331,11 +331,11 @@ class Lodash {
     if (
       typeof object !== 'object' ||
       object === null ||
-      Array.isArray(object)
+      object instanceof Array
     ) {
       throw new TypeError('First argument should be an object');
     }
-    if (arr && !Array.isArray(arr)) {
+    if (arr && !(arr instanceof Array)) {
       throw new TypeError('Second argument should be an array');
     }
     const result = {};
@@ -357,7 +357,7 @@ class Lodash {
     if (
       typeof object !== 'object' ||
       object === null ||
-      Array.isArray(object)
+      object instanceof Array
     ) {
       throw new TypeError('First argument should be an object');
     }
@@ -384,11 +384,11 @@ class Lodash {
     if (
       typeof object !== 'object' ||
       object === null ||
-      Array.isArray(object)
+      object instanceof Array
     ) {
       throw new TypeError('First argument should be an object');
     }
-    if (arr && !Array.isArray(arr)) {
+    if (arr && !(arr instanceof Array)) {
       throw new TypeError('Second argument should be an array');
     }
     const result = {};
@@ -410,7 +410,7 @@ class Lodash {
     if (
       typeof object !== 'object' ||
       object === null ||
-      Array.isArray(object)
+      object instanceof Array
     ) {
       throw new TypeError('First argument should be an object');
     }
@@ -437,7 +437,7 @@ class Lodash {
     if (
       typeof object !== 'object' ||
       object === null ||
-      Array.isArray(object)
+      object instanceof Array
     ) {
       throw new TypeError('First argument should be an object');
     }
