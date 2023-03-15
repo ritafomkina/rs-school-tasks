@@ -353,8 +353,6 @@ keyboard.setParent('fragment')
   .becomeChildOf('.keyboard');
 
 // некоторая доп информация:
-const addTextFirst = document.querySelector('.add-text');
-addTextFirst.innerHTML = 'press Control+Space to change the language (doesn`t work well)';
 const addTextLast = document.querySelector('.add-text:last-child');
 addTextLast.innerHTML = 'keyboard is created for mac os';
 
